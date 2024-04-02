@@ -26,13 +26,16 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Installation（安装依赖）
 
 ```bash
 $ npm install
 ```
-
-## Running the app
+## code error（代码报红处理）
+```bash
+$ npm run lint
+```
+## Running the app（运行命令）
 
 ```bash
 # development
