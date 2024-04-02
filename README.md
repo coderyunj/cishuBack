@@ -31,7 +31,7 @@
 ```bash
 $ npm install
 ```
-## code error（代码报红处理）
+## code error（代码报红处理，如果代码还是报错，请关闭项目再重新打开项目）
 ```bash
 $ npm run lint
 ```
