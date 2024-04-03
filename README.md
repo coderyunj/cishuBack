@@ -63,7 +63,7 @@ $ npm run test:cov
 
 ## swagger地址
 ```bash
-$ http://127.0.0.1/api
+$ http://127.0.0.1:3000/api
 ```
 
 ## Support
