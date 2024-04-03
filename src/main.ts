@@ -13,6 +13,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
-  console.log("swagger地址为http://127.0.0.1/api");
+  console.log("swagger地址为http://127.0.0.1:3000/api");
 }
 bootstrap();
