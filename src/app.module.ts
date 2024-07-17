@@ -10,8 +10,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'localhost', // 地址，这里是本机回环地址
       port: 3306, // 端口号
       username: 'root', // 用户名
-      password: '123456', // 用户密码
-      database: 'test', //数据库名称,需要已经建立的数据库
+      password: 'root', // 用户密码
+      database: 'nestTest', //数据库名称,需要已经建立的数据库
       // 从当前目录及其子目录中的所有 .entity 文件加载实体。
       // __dirname: 这是当前文件的目录。
       // '/**/*.entity{.ts,.js}': 这是一个 glob 模式，用于匹配当前目录及其子目录中的所有 .entity 结尾的文件，

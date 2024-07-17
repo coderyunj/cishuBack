@@ -6,13 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('用户')
-@Controller('user')
+@Controller('user') // 前缀
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -23,9 +24,10 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '查询用户' })
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Get('/login')
+  findAll(@Query() data: any) {
+    console.log(data, 'codefff');
+    return this.userService.login(data.code);
   }
 
   @ApiOperation({ summary: '查询单个用户' })
