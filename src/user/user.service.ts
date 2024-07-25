@@ -33,6 +33,7 @@ export class UserService {
   }
 
   async login(code: string): Promise<any> {
+    // 登录获取openid
     const grant_type = 'authorization_code';
     console.log(code, 'code1');
     const appid = 'wxc8cc0c6924a7c203';
