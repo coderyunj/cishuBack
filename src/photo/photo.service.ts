@@ -11,8 +11,13 @@ export class PhotoService {
     // private readonly httpService: HttpService,
   ) {}
   create(createPhotoDto: CreatePhotoDto) {
-    console.log(111);
-    console.log(222);
     return this.photoRepository.save(createPhotoDto);
+  }
+
+  buyPhoto(data: any) {
+    const createPhotoDto = new CreatePhotoDto();
+    createPhotoDto.userid = '5';
+    createPhotoDto.description = 'ffff';
+    this.photoRepository.save(createPhotoDto);
   }
 }

@@ -23,17 +23,23 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @ApiOperation({ summary: '查询用户' })
+  @ApiOperation({ summary: '用户登录接口' })
   @Get('/login')
-  findAll(@Query() data: any) {
+  login(@Query() data: any) {
     console.log(data, 'codefff');
     return this.userService.login(data.code);
+  }
+
+  @ApiOperation({ summary: '查询所有用户' })
+  @Get('/getUserList')
+  getUserList() {
+    return this.userService.getUserList();
   }
 
   @ApiOperation({ summary: '查询单个用户' })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(id);
   }
 
   @ApiOperation({ summary: '更新用户' })
