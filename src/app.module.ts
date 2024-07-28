@@ -4,8 +4,21 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhotoModule } from './photo/photo.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { redisStore } from 'cache-manager-redis-store';
+import { configuration } from './config';
+import { AppConfigsService } from './config/app-configs.service';
+import { RabbitmqModule } from './config/rabbitmq/rabbitmq.module';
+import { RmqContext } from '@nestjs/microservices';
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      envFilePath: ['.env', '.env.security'],
+      load: [configuration],
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql', // 数据库类型名称
       host: 'localhost', // 地址，这里是本机回环地址
@@ -22,8 +35,31 @@ import { PhotoModule } from './photo/photo.module';
     }),
     UserModule,
     PhotoModule,
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      //@ts-ignore
+      useFactory: async (configService: ConfigService) => {
+        console.log('链接redis');
+        const redisOrtions = configService.get('redis');
+        const store = await redisStore({
+          socket: {
+            host: redisOrtions.host,
+            port: redisOrtions.port,
+          },
+          database: redisOrtions.database,
+          password: redisOrtions.password,
+          ttl: redisOrtions.ttls.default,
+        });
+        return {
+          store: store,
+        };
+      },
+    }),
+    RabbitmqModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppConfigsService, RmqContext],
 })
 export class AppModule {}
