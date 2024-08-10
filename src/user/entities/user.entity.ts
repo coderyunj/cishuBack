@@ -13,10 +13,10 @@ export class User {
   @Column({ nullable: false, length: 200 })
   openid: string;
 
-  @Column({ nullable: false, length: 20 })
+  @Column({ nullable: false, length: 200 })
   username: string;
 
-  @Column({ nullable: false, length: 20 })
+  @Column({ nullable: false, length: 200 })
   password: string;
 
   @Column()

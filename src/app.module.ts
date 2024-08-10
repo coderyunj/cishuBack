@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhotoModule } from './photo/photo.module';
+import { ProductModule } from './product/product.module';
+import { CategoryModule } from './category/category.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
@@ -22,10 +24,10 @@ import { RmqContext } from '@nestjs/microservices';
     TypeOrmModule.forRoot({
       type: 'mysql', // 数据库类型名称
       host: 'localhost', // 地址，这里是本机回环地址
-      port: 3306, // 端口号
+      port: 20001, // 端口号
       username: 'root', // 用户名
-      password: 'root', // 用户密码
-      database: 'nestTest', //数据库名称,需要已经建立的数据库
+      password: '123456', // 用户密码
+      database: 'test01', //数据库名称,需要已经建立的数据库
       // 从当前目录及其子目录中的所有 .entity 文件加载实体。
       // __dirname: 这是当前文件的目录。
       // '/**/*.entity{.ts,.js}': 这是一个 glob 模式，用于匹配当前目录及其子目录中的所有 .entity 结尾的文件，
@@ -35,6 +37,8 @@ import { RmqContext } from '@nestjs/microservices';
     }),
     UserModule,
     PhotoModule,
+    ProductModule,
+    CategoryModule,
     CacheModule.registerAsync({
       isGlobal: true,
       imports: [ConfigModule],

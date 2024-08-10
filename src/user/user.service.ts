@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { getMd5Str } from '../utils/utils';
+import { generateUUID, getMd5Str } from '../utils/utils';
 // import { CreatePhotoDto } from '../photo/dto/create-photo.dto';
 @Injectable()
 export class UserService {
@@ -47,15 +47,14 @@ export class UserService {
     // const url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=${grant_type}&appid=${appid}&secret=${appSecret}`; // 替换为你的API URL
     const response = await this.httpService.get(url).toPromise();
     console.log(response.data, 'res');
-
     const createUserDto = new CreateUserDto();
-    createUserDto.username = 'lsl';
-    createUserDto.password = '123';
+    createUserDto.username = `用户${generateUUID()}`;
+    createUserDto.password = '123456';
     createUserDto.openid = getMd5Str(response.data.openid);
     const exit = await this.userRepository.findOneBy({
       openid: createUserDto.openid,
     });
-    console.log(createUserDto, 'createUserDto');
+    console.log(exit, 'exit');
     if (!exit) {
       await this.userRepository.save(createUserDto);
     }
