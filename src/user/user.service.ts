@@ -51,14 +51,21 @@ export class UserService {
     createUserDto.username = `用户${generateUUID()}`;
     createUserDto.password = '123456';
     createUserDto.openid = getMd5Str(response.data.openid);
-    const exit = await this.userRepository.findOneBy({
+    let userInfo = await this.userRepository.findOneBy({
       openid: createUserDto.openid,
     });
-    console.log(exit, 'exit');
-    if (!exit) {
-      await this.userRepository.save(createUserDto);
+    console.log(userInfo, 'exit');
+    if (!userInfo) {
+      userInfo = await this.userRepository.save(createUserDto);
     }
-    return response.data;
+    return {
+      code: 200,
+      data: {
+        userInfo,
+        tokenInfo: response.data,
+      },
+      message: '登录成功',
+    };
   }
 
   async getUserList() {
