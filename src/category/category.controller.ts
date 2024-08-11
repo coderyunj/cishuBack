@@ -12,7 +12,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('商品')
-@Controller('product') // 前缀
+@Controller('category') // 前缀
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
@@ -30,7 +30,7 @@ export class CategoryController {
     return this.categoryService.findOne(id);
   }
 
-  @ApiOperation({ summary: '查询所有商品' })
+  @ApiOperation({ summary: '查询所有分类' })
   @Get('/getList')
   getList() {
     return this.categoryService.getList();

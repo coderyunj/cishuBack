@@ -31,6 +31,7 @@ export class ProductService {
   remove(number: number) {}
 
   getList() {
+    console.log('11113');
     return this.productRepository.createQueryBuilder('product').getMany();
   }
 }
