@@ -38,6 +38,15 @@ export class UserService {
   }
 
   async login(code: string): Promise<any> {
+    // const promise1 = new Promise((resolve, reject) => {
+    //   console.log('promise1执行完毕');
+    // });
+    // const promise2 = new Promise((resolve, reject) => {
+    //
+    //   console.log('超出最大执行时间promise2执行完毕');
+    // });
+    // const res = await Promise.race([promise1, promise2]);
+
     // 登录获取openid
     const grant_type = 'authorization_code';
     console.log(code, 'code1');

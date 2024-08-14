@@ -13,6 +13,8 @@ import { configuration } from './config';
 import { AppConfigsService } from './config/app-configs.service';
 import { RabbitmqModule } from './config/rabbitmq/rabbitmq.module';
 import { RmqContext } from '@nestjs/microservices';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthInterceptor } from './auth/auth.interceptor';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -64,6 +66,14 @@ import { RmqContext } from '@nestjs/microservices';
     RabbitmqModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppConfigsService, RmqContext],
+  providers: [
+    AppService,
+    AppConfigsService,
+    RmqContext,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthInterceptor,
+    },
+  ],
 })
 export class AppModule {}
