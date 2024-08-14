@@ -15,6 +15,7 @@ import { RabbitmqModule } from './config/rabbitmq/rabbitmq.module';
 import { RmqContext } from '@nestjs/microservices';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { tokenModule } from "./token/token.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -41,6 +42,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     PhotoModule,
     ProductModule,
     CategoryModule,
+    tokenModule,
     CacheModule.registerAsync({
       isGlobal: true,
       imports: [ConfigModule],
