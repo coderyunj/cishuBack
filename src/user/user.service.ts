@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { generateUUID, getMd5Str } from '../utils/utils';
+import { TokenService } from "../token/token.service";
 // import { CreatePhotoDto } from '../photo/dto/create-photo.dto';
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>, // 注入User实体类的Repository
     private readonly httpService: HttpService, // 注入httpService发送请求
+    private readonly tokenService: TokenService,
   ) {}
   create(createUserDto: CreateUserDto) {
     return this.userRepository.save(createUserDto);
@@ -60,18 +62,27 @@ export class UserService {
     createUserDto.username = `用户${generateUUID()}`;
     createUserDto.password = '123456';
     createUserDto.openid = getMd5Str(response.data.openid);
+    // 查询用户信息
     let userInfo = await this.userRepository.findOneBy({
       openid: createUserDto.openid,
     });
     console.log(userInfo, 'exit');
     if (!userInfo) {
+      // 存储用户信息
       userInfo = await this.userRepository.save(createUserDto);
     }
+    const payload = {
+      username: createUserDto.username,
+      openid: createUserDto.openid,
+    };
+    console.log(payload, 'pay');
+    // 生成 JWT token
+    const token = await this.tokenService.generateToken(payload);
     return {
       code: 200,
       data: {
         userInfo,
-        tokenInfo: response.data,
+        token,
       },
       message: '登录成功',
     };

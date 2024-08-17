@@ -7,7 +7,7 @@ export class TokenService {
 
   // 生成 token
   async generateToken(payload: any): Promise<string> {
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, { secret: 'your-secret-key' });
   }
   // 解析和验证 token
   async validateToken(token: string): Promise<any> {

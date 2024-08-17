@@ -12,6 +12,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { SkipAuth } from '../decorators/skip-auth.decorator';
 @ApiTags('用户')
 @Controller('user') // 前缀
 export class UserController {
@@ -25,6 +26,7 @@ export class UserController {
 
   @ApiOperation({ summary: '用户登录接口' })
   @Get('/login')
+  @SkipAuth()
   login(@Query() data: any) {
     console.log(data, 'codefff');
     return this.userService.login(data.code);
