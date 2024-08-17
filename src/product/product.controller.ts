@@ -11,6 +11,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { categoryType } from "./dto/select-product.dto";
 @ApiTags('商品')
 @Controller('product') // 前缀
 export class ProductController {
@@ -36,10 +37,10 @@ export class ProductController {
     return this.productService.getList();
   }
 
-  @ApiOperation({ summary: '更新用户' })
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateProductDto) {
-    return this.productService.update(+id, updateUserDto);
+  @ApiOperation({ summary: '根据分类type查询商品' })
+  @Post('/findByCategoryType')
+  findByCategoryType(@Body() category: categoryType) {
+    return this.productService.findByCategoryType(category);
   }
 
   @ApiOperation({ summary: '删除用户' })

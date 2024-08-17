@@ -6,7 +6,7 @@ import { TokenService } from './token.service';
   imports: [
     JwtModule.register({
       secret: 'your-secret-key', // 请使用一个复杂的密钥并在环境变量中配置
-      signOptions: { expiresIn: '60s' }, // token 过期时间
+      signOptions: { expiresIn: '1h' }, // token 过期时间
     }),
   ],
   providers: [TokenService],

@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { generateUUID, getMd5Str } from '../utils/utils';
+import { categoryType } from "./dto/select-product.dto";
 // import { CreatePhotoDto } from '../photo/dto/create-photo.dto';
 @Injectable()
 export class ProductService {
@@ -33,5 +34,16 @@ export class ProductService {
   getList() {
     console.log('11113');
     return this.productRepository.createQueryBuilder('product').getMany();
+  }
+
+  findByCategoryType(category: categoryType) {
+    console.log(category, 'cate');
+    return this.productRepository
+      .createQueryBuilder('product')
+      .select()
+      .where('product.category_type = :categoryType', {
+        categoryType: category.categoryType,
+      })
+      .getMany();
   }
 }
